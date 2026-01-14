@@ -1,0 +1,53 @@
+################################### Question 1 ################################
+# Creating the matrix
+n <- 100
+set.seed(123)
+m <- matrix(runif(n^2, min = 0, max = 1), nrow = n, ncol = n)
+View(m)
+
+# Matrix multiplication
+m_2 <- m%*%m
+View(m)
+t1 <- system.time(m%*%m)[3] # This function will return a table with 3 columns 
+t1                            # name, type, value. I have accessed third column
+
+################################# Question 2 ##################################
+n_vec <- c(1e2, 5e2, 1e3, 2e3, 3e3, 4e3, 5e3)
+time_vec <- numeric(7) # To generate a numeric vector of length 7
+time_vec
+set.seed(123)
+for(i in 1:7){
+  m <- matrix(runif(n_vec[i]^2), nrow = n_vec[i], ncol = n_vec[i])
+  time_vec[i] <- system.time(m%*%m)[3]
+}
+plot(n_vec, time_vec)
+
+################################ Question 3 ###################################
+# Creating a Positive semidefinite matrix
+n <- 1000
+A <- matrix(runif(n^2), nrow = n, ncol = n)
+A <- t(A)%*%A
+isSymmetric(A) # To check symmetricity of A
+t2 <- system.time(solve(A))
+t2
+t3 <- system.time(qr.solve(A))
+t3
+t4 <- system.time({
+  R <- chol(A)
+  A_inv <- chol2inv(R)
+})
+t4
+t5 <- system.time({
+  s <- svd(A)
+  u <- s$u
+  v <- s$v
+  d <- s$d
+  A_inv <- v%*%diag(1/d)%*%t(u)
+  View(A_inv)
+  })
+t5
+s <- svd(A)
+d <- s$d
+diag(1/d)
+View(diag(1/d))
+# Conclusion cholesky decomposition method is faster than any other method where matrix is PSD
