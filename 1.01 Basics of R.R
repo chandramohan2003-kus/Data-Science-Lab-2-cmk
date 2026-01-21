@@ -141,6 +141,8 @@ mt[1,2] # to access second element of first row
 mt[,3] # to access third column
 mt[2,] # to access second row
 print(mt)
+result <- rbind(matrix1, matrix2) # to join two matrices row-wise
+result <- cbind(matrix1, matrix2) # to join two matrices column-wise
 # Data Frame
 df=data.frame(name=c("Ram","Shyam","Geeta"),
               marks=c(78,55,92),
@@ -266,4 +268,5 @@ for(i in 1:10){
 # A%*%B multiplication of matrices
 # t(A) transpose of matrix
 # diag(A) diagonal elements of the matrix
+
 # solve(A) inverse of the matrix
